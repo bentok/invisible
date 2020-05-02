@@ -17,7 +17,7 @@ export class PaulNinjaScene extends Scene {
   }
 
   create() {
-    this.image = this.matter.add.sprite(0, 0, 'foobar'); // Image name specified in boot.scene.ts
+    this.image = this.matter.add.sprite(0, 0, 'IdleFrog'); // Image name specified in boot.scene.ts
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     this.matter.world.setBounds(0, 0, getGameWidth(this), getGameHeight(this), 0, true, false, true);
   }
