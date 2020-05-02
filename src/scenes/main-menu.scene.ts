@@ -20,6 +20,9 @@ export class MainMenuScene extends Scene {
     new MenuButton(this, 100, 150, 'Start Game', () => {
       this.scene.start('Game');
     });
+    new MenuButton(this, 100, 250, `Paul's Awesome Ninja Game`, () => {
+      this.scene.start('PaulNinja');
+    });
     // Example of a second start screen option
     // new MenuButton(this, 100, 200, 'Options', () => {
     //   this.scene.start('Options');
