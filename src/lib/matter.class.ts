@@ -1,0 +1,1 @@
+export class Matter extends Phaser.Physics.Matter.MatterPhysics {}
