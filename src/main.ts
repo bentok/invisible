@@ -3,24 +3,27 @@ import { BootScene, GameScene, MainMenuScene } from './scenes';
 import { PaulNinjaScene } from './scenes/paul-ninja.scene';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
-    title: 'Invisible (Working Title)',
+  title: 'Invisible (Working Title)',
 
-    type: Phaser.AUTO,
+  type: Phaser.AUTO,
 
-    width: window.innerWidth,
-    height: window.innerHeight,
+  width: window.innerWidth,
+  height: window.innerHeight,
 
-    physics: {
-        default: 'matter',
-        matter: {
-            debug: true,
-        },
+  physics: {
+    default: 'matter',
+    matter: {
+      debug: true,
+      gravity: {
+        y: 0.8
+      },
     },
+  },
 
-    scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene],
+  scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene],
 
-    parent: 'content',
-    backgroundColor: '#000000',
+  parent: 'content',
+  backgroundColor: '#000000',
 };
 
 export const game = new Phaser.Game(gameConfig);
