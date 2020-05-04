@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { BootScene, GameScene, MainMenuScene } from './scenes';
+import { BootScene, GameScene, MainMenuScene, GalaxyScene } from './scenes';
 import { PaulNinjaScene } from './scenes/paul-ninja.scene';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
@@ -13,17 +13,20 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'matter',
     matter: {
-      debug: true,
-      gravity: {
-        y: 0.8
+      gravity: { 
+        x: 0,
+        y: 0,
       },
+      // "plugins.attractors": true,
+      debug: true,
     },
   },
 
-  scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene],
+  scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene, GalaxyScene],
 
   parent: 'content',
   backgroundColor: '#000000',
+  render: { pixelArt: true, antialias: true },
 };
 
 export const game = new Phaser.Game(gameConfig);
