@@ -10,6 +10,7 @@ import {
 // import { between } from '../lib/Math';
 import { GALAXY } from "../const/galaxy";
 import { GalaxyMap } from "../objects/galaxy-system";
+import { GalaxyController } from '../objects/controls/galaxy-controller';
 
 const sceneConfig: ISettingsConfig = {
     active: false,
@@ -23,6 +24,9 @@ export class GalaxyScene extends Scene {
     private numberSectorsX: number;
     private numberSectorsY: number;
     private galaxySystems: GalaxyMap[][];
+    // Controller setup
+    private _galaxyController: GalaxyController;
+    private _sprite: Phaser.Physics.Matter.Sprite;
 
     constructor() {
       super(sceneConfig);
@@ -67,6 +71,15 @@ export class GalaxyScene extends Scene {
         this.cameras.main.setBounds(0, 0, GALAXY.width, GALAXY.height);
         this.cameras.main.setZoom(3);
         // this.cameras.main.setZoom(1);
+
+        // *****************************************************************
+        // SPRITE CONTROLLER
+        // *****************************************************************
+        this._sprite = this.matter.add.sprite(GALAXY.width / 2, GALAXY.height / 2, 'foobar');
+        this._galaxyController = new GalaxyController(this._sprite);
+        this._galaxyController.init();
+        // TODO: Create observables to handle key events
+        
     }
   
     create(): void {
@@ -84,7 +97,16 @@ export class GalaxyScene extends Scene {
     }
   
     update(time: any, delta: any): void {
+     
       // Update camera
       this.controls.update(delta);
+
+      // Handle key press 
+      // TODO: Look at handling as an observable
+      if (this.cursorKeys?.left?.isDown) {
+          this._galaxyController.handleKeyPress(Phaser.Input.Keyboard.KeyCodes.LEFT);
+      }
+      
+
     }
 }
