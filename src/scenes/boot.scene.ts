@@ -81,7 +81,10 @@ export class BootScene extends Scene {
     // Load sample assets
     // Replace with real assets
     this.load.image('IdleFrog', 'src/assets/Ninja Frog/Idle (32x32).png');
-    this.load.image('RunningFrog', 'src/assets/Ninja Frog/Run (32x32).png');
-
+    this.load.image('GalaxyBackground', './src/assets/space/backgrounds/color-stars-bg.png');
+    this.load.image('Earth', './src/assets/space/planets/Earth.png');
+    this.load.image('Jupiter', './src/assets/space/planets/Jupiter.png');
+    this.load.image('Mars', './src/assets/space/planets/Mars.png');
+    this.load.image('Moon', './src/assets/space/planets/Moon.png');
   }
 }
