@@ -13,7 +13,7 @@ export interface IGalaxyResourceConstructor {
 // Generic key interfaces
 export interface IKeyEvents {
     key: number;
-    updatedSprite: Function;
+    updatedSprite: () => void;
 }
 
 export interface IControlEventHandler {
@@ -21,5 +21,5 @@ export interface IControlEventHandler {
     keyEvents: IKeyEvents[];
 
     init(): void;
-    handleKeyPress(key: number, sprite: Phaser.Physics.Matter.Sprite): void;
+    handleKeyPress(key: number): void;
 }
