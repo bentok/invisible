@@ -81,5 +81,7 @@ export class BootScene extends Scene {
     // Load sample assets
     // Replace with real assets
     this.load.image('IdleFrog', 'src/assets/Ninja Frog/Idle (32x32).png');
+    this.load.image('RunningFrog', 'src/assets/Ninja Frog/Run (32x32).png');
+
   }
 }
