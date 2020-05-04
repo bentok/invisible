@@ -13,10 +13,12 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   physics: {
     default: 'matter',
     matter: {
+      gravity: { 
+        x: 0,
+        y: 0,
+      },
+      // "plugins.attractors": true,
       debug: true,
-      // gravity: {
-      //   y: 0.8
-      // },
     },
   },
 

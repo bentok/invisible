@@ -17,7 +17,7 @@ export class GalaxyMap {
 
         // Create a random seed, which depends on the x and y value
         // So we get for each x and y value the same seed
-        let seed = 1586603672891738926694102 * this.position.x * this.position.y;
+        let seed = 1586603672819283926694102 * this.position.x * this.position.y;
     
         // Push that seed into the random data generator of Phaser
         this.rnd = new Phaser.Math.RandomDataGenerator([seed.toString()]);
@@ -27,6 +27,7 @@ export class GalaxyMap {
 
         // Only if the star systems exist, we should create it
         if (this.starSystemExists) {
+            // Check if this system is a planet or star
             this.isPlanet = this.rnd.between(0, 100) === 1 ? true : false;
             let resourceParams = {
                 scene: this.scene,
@@ -34,7 +35,9 @@ export class GalaxyMap {
                 rnd: this.rnd,
             }
 
+            // Create the resource
             if (this.isPlanet) {
+
                 this.resource = new Planet(resourceParams);
             }
             else {
