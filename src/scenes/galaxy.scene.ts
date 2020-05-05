@@ -75,7 +75,7 @@ export class GalaxyScene extends Scene {
         // *****************************************************************
         // SPRITE CONTROLLER
         // *****************************************************************
-        this._sprite = this.matter.add.sprite(GALAXY.width / 2, GALAXY.height / 2, 'foobar');
+        this._sprite = this.matter.add.sprite(0, 0, 'foobar');
         this._galaxyController = new GalaxyController(this._sprite);
         this._galaxyController.init();
         // TODO: Create observables to handle key events
@@ -97,16 +97,22 @@ export class GalaxyScene extends Scene {
     }
   
     update(time: any, delta: any): void {
-     
-      // Update camera
-      this.controls.update(delta);
 
-      // Handle key press 
-      // TODO: Look at handling as an observable
-      if (this.cursorKeys?.left?.isDown) {
-          this._galaxyController.handleKeyPress(Phaser.Input.Keyboard.KeyCodes.LEFT);
+      if (this?.cursorKeys?.left?.isDown) {
+        this._sprite.setVelocityX(-10);
+      } else if (this?.cursorKeys?.right?.isDown) {
+        this._sprite.setVelocityX(10);
+      } else {
+        this._sprite.setVelocityX(0);
       }
-      
+      if (this?.cursorKeys?.up?.isDown) {
+        this._sprite.setVelocityY(-10);
+      } else if (this?.cursorKeys?.down?.isDown) {
+        this._sprite.setVelocityY(10);
+      } else {
+        this._sprite.setVelocityY(0);
+      }
+      this.cameras.main.centerOn(this._sprite.x, this._sprite.y);
 
     }
 }

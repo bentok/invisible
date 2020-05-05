@@ -33,7 +33,7 @@ export class GalaxyMap {
                 scene: this.scene,
                 position: this.position,
                 rnd: this.rnd,
-            }
+            };
 
             // Create the resource
             if (this.isPlanet) {

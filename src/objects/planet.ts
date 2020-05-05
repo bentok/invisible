@@ -3,7 +3,7 @@ import { IGalaxyResourceConstructor } from "../interfaces/interfaces";
 import { Plugin } from "matter";
 
 export class Planet {
-    private planet: Phaser.GameObjects.Sprite;
+    private planet: any;
     private position: Phaser.Math.Vector2;
     private imageSource: string;
     private rnd: Phaser.Math.RandomDataGenerator;
@@ -18,8 +18,8 @@ export class Planet {
         this.imageSource = GALAXY.planetSources[this.rnd.between(0, GALAXY.planetSources.length - 1)];
         
         // Randomize the planet size
-        // let planetSize = this.rnd.between(100, 300);
-        
+        let planetSize = this.rnd.between(100, 300);
+        this.scene.matter.enableAttractorPlugin();
         // Create planet
         this.planet = this.scene.matter.add
         .sprite(
@@ -28,9 +28,21 @@ export class Planet {
             this.imageSource,
             undefined, 
             {
-                // circleRadius: planetSize / 2,
-                circleRadius: 13,
+                circleRadius: planetSize / 6,
+                mass: planetSize,
+                plugin: {
+                  attractors: [
+                    (bodyA: any, bodyB: any) => {
+                      return {
+                        x: (bodyA.position.x - bodyB.position.x) * 0.00001,
+                        y: (bodyA.position.y - bodyB.position.y) * 0.00001
+                      };
+                    }
+                  ]
+                }
             },
-        );
+            
+        ).setIgnoreGravity(true);
+      this.scene.matter.add.mouseSpring();
     }
 }
