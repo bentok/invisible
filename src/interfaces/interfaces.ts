@@ -13,7 +13,7 @@ export interface IGalaxyResourceConstructor {
 // Generic key interfaces
 export interface IKeyEvents {
     key: number;
-    updatedSprite: () => void;
+    updatedSpritePosition: (oldX: number, oldY: number) => {xCoord: number, yCoord: number };
 }
 
 export interface IControlEventHandler {
@@ -21,5 +21,5 @@ export interface IControlEventHandler {
     keyEvents: IKeyEvents[];
 
     init(): void;
-    handleKeyPress(key: number): void;
+    handleKeyPress(key: number, oldX: number, oldY: number): { xCoord: number, yCoord: number};
 }

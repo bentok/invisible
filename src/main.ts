@@ -1,7 +1,6 @@
 import * as Phaser from 'phaser';
 import { BootScene, GameScene, MainMenuScene, GalaxyScene } from './scenes';
 import { PaulNinjaScene } from './scenes/paul-ninja.scene';
-const MatterAttractors = require('matter-attractors');
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   title: 'Invisible (Working Title)',
@@ -21,15 +20,6 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       // "plugins.attractors": true,
       debug: true,
     },
-  },
-  plugins: {
-    scene: [
-      {
-        plugin: MatterAttractors, // The plugin class
-        key: "matterAttractors", // Where to store in Scene.Systems, e.g. scene.sys.matterCollision
-        mapping: "matterAttractors" // Where to store in the Scene, e.g. scene.matterCollision
-      }
-    ]
   },
   scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene, GalaxyScene],
 
