@@ -16,6 +16,7 @@
     "yarn": "^1.19.1"
   },
   "dependencies": {
+    "matter-attractors": "^0.1.6",
     "phaser": "^3.23.0",
     "rxjs": "^6.5.5"
   },

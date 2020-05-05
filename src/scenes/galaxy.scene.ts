@@ -6,7 +6,7 @@ import {
     ISettingsConfig,
     Scene,
 } from '../lib';
-// import { Matter } from '../lib/matter.class';
+import { Matter } from '../lib/matter.class';
 // import { between } from '../lib/Math';
 import { GALAXY } from "../const/galaxy";
 import { GalaxyMap } from "../objects/galaxy-system";
@@ -75,7 +75,6 @@ export class GalaxyScene extends Scene {
         // *****************************************************************
         // SPRITE CONTROLLER
         // *****************************************************************
-        this._sprite = this.matter.add.sprite(0, 0, 'foobar');
         this._galaxyController = new GalaxyController(this._sprite);
         this._galaxyController.init();
         // TODO: Create observables to handle key events
@@ -83,6 +82,7 @@ export class GalaxyScene extends Scene {
     }
   
     create(): void {
+        this.matter.enableAttractorPlugin();
         // Create star systems
         for (let y = 0; y < this.numberSectorsY; y++) {
             this.galaxySystems[y] = [];
@@ -94,6 +94,7 @@ export class GalaxyScene extends Scene {
             });
             }
         }
+        this._sprite = this.matter.add.sprite(0, 0, 'foobar', undefined);
     }
   
     update(time: any, delta: any): void {
