@@ -24,7 +24,8 @@ export class GalaxyController implements IControlEventHandler {
             {
                 key: Phaser.Input.Keyboard.KeyCodes.LEFT,
                 updatedSpritePosition: (x: number, y: number) => {
-                    return { xCoord: x - 10, yCoord: y };
+                    const xCoord = x - 10 >= 0 ? x - 10 : 0;
+                    return { xCoord, yCoord: y };
                 }
             },
             {
@@ -42,7 +43,8 @@ export class GalaxyController implements IControlEventHandler {
             {
                 key: Phaser.Input.Keyboard.KeyCodes.UP,
                 updatedSpritePosition: (x: number, y: number) => {
-                    return { xCoord: x, yCoord: y -  10};
+                    const yCoord = y - 10 >= 0 ? y - 10 : 0;
+                    return { xCoord: x, yCoord };
                 }
             }
         ]
