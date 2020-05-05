@@ -1,13 +1,8 @@
 
 import {
-    // IBody,
-    // ICursorKeys,
-    // IRectangle,
     ISettingsConfig,
     Scene,
 } from '../lib';
-// import { Matter } from '../lib/matter.class';
-// import { between } from '../lib/Math';
 import { GALAXY } from "../const/galaxy";
 import { GalaxyMap } from "../objects/galaxy-system";
 import { GalaxyController } from '../objects/controls/galaxy-controller';
@@ -77,13 +72,13 @@ export class GalaxyScene extends Scene {
         // *****************************************************************
         // SPRITE CONTROLLER
         // *****************************************************************
-        this._sprite = this.matter.add.sprite(0, 0, 'foobar');
         this._galaxyController = new GalaxyController();
         this._galaxyController.init();
         
     }
   
     create(): void {
+        this.matter.enableAttractorPlugin();
         // Create star systems
         for (let y = 0; y < this.numberSectorsY; y++) {
             this.galaxySystems[y] = [];
@@ -95,6 +90,7 @@ export class GalaxyScene extends Scene {
             });
             }
         }
+        this._sprite = this.matter.add.sprite(0, 0, 'foobar', undefined);
 
         // TODO: When to unsubscribe?
         fromEvent(document, 'keydown').pipe(

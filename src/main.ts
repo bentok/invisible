@@ -21,7 +21,6 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       debug: true,
     },
   },
-
   scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene, GalaxyScene],
 
   parent: 'content',

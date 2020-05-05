@@ -19,7 +19,6 @@ export class Planet {
         
         // Randomize the planet size
         let planetSize = this.rnd.between(100, 300);
-        this.scene.matter.enableAttractorPlugin();
         // Create planet
         this.planet = this.scene.matter.add
         .sprite(
@@ -30,6 +29,7 @@ export class Planet {
             {
                 circleRadius: planetSize / 6,
                 mass: planetSize,
+                isStatic: true,
                 plugin: {
                   attractors: [
                     (bodyA: any, bodyB: any) => {
