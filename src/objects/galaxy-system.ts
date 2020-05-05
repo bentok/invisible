@@ -1,4 +1,4 @@
-import { GALAXY } from "../const/galaxy";
+import { GALAXY } from "../const/galaxy.const";
 import { Planet } from "../objects/planet"
 import { Star } from "../objects/star"
 import { IGalaxySystemConstructor } from "../interfaces/interfaces";
