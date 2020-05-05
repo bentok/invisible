@@ -11,6 +11,8 @@ import {
 import { GALAXY } from "../const/galaxy";
 import { GalaxyMap } from "../objects/galaxy-system";
 import { GalaxyController } from '../objects/controls/galaxy-controller';
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const sceneConfig: ISettingsConfig = {
     active: false,
@@ -76,9 +78,8 @@ export class GalaxyScene extends Scene {
         // SPRITE CONTROLLER
         // *****************************************************************
         this._sprite = this.matter.add.sprite(0, 0, 'foobar');
-        this._galaxyController = new GalaxyController(this._sprite);
+        this._galaxyController = new GalaxyController();
         this._galaxyController.init();
-        // TODO: Create observables to handle key events
         
     }
   
@@ -94,24 +95,20 @@ export class GalaxyScene extends Scene {
             });
             }
         }
+
+        // TODO: When to unsubscribe?
+        fromEvent(document, 'keydown').pipe(
+            map((key: any) => this._galaxyController.handleKeyPress(key.keyCode, this._sprite.x, this._sprite.y))
+        ).subscribe(newPosition => {
+            const { xCoord, yCoord } = newPosition;
+            this._sprite.setPosition(xCoord, yCoord);
+        })
+        
+
     }
   
     update(time: any, delta: any): void {
 
-      if (this?.cursorKeys?.left?.isDown) {
-        this._sprite.setVelocityX(-10);
-      } else if (this?.cursorKeys?.right?.isDown) {
-        this._sprite.setVelocityX(10);
-      } else {
-        this._sprite.setVelocityX(0);
-      }
-      if (this?.cursorKeys?.up?.isDown) {
-        this._sprite.setVelocityY(-10);
-      } else if (this?.cursorKeys?.down?.isDown) {
-        this._sprite.setVelocityY(10);
-      } else {
-        this._sprite.setVelocityY(0);
-      }
       this.cameras.main.centerOn(this._sprite.x, this._sprite.y);
 
     }
