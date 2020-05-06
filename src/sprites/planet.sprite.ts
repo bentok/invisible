@@ -8,8 +8,8 @@ const planetAttractor = (bodyA: any, bodyB: any) => {
     return null;
   }
   return {
-    x: (bodyA.position.x - bodyB.position.x) * 0.00001,
-    y: (bodyA.position.y - bodyB.position.y) * 0.00001,
+    x: (bodyA.position.x - bodyB.position.x) * 0.00005,
+    y: (bodyA.position.y - bodyB.position.y) * 0.00005,
   }
 };
 
@@ -26,5 +26,6 @@ export class Planet extends Sprite {
       }
     };
     super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name, undefined, options);
+    this.setScale(3, 3);
   }
 }
