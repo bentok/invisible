@@ -7,6 +7,9 @@ import { GALAXY } from "../const/galaxy.const";
 import {Player} from "../sprites/player.sprite";
 import {Planet} from "../sprites/planet.sprite";
 import { generateStars } from "../services/stars.service";
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { VelocityDirection } from '../interfaces/interfaces';
 
 const sceneConfig: ISettingsConfig = {
   active: false,
@@ -37,6 +40,17 @@ export class GameScene extends Scene {
     
     this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
+
+    fromEvent(document, 'keydown').pipe(
+      map((key: any) => this.player.controller.handleKeyPress(key.keyCode))
+  ).subscribe(newPosition => {
+      if (newPosition?.direction === VelocityDirection.X) {
+          this.player.setVelocityX(newPosition.velocity);
+      } else if (newPosition?.direction === VelocityDirection.Y){
+          this.player.setVelocityY(newPosition.velocity);
+      }
+      
+  })
     
     generateStars(this, GALAXY.width, GALAXY.height, 800);
   }
