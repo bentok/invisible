@@ -35,6 +35,12 @@ export class Player extends Sprite {
     
     this.rotationRadian = degreeToRadian(rotationDegree);
     this.thrustSpeed = thrustSpeed;
+    
+    this.setOnCollide(() => {
+      // make explosion animation, and restart scene
+      console.error('you died');
+    });
+    
   }
   
   public manageControls({ up, right, left }: Phaser.Types.Input.Keyboard.CursorKeys) {
