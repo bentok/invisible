@@ -1,8 +1,8 @@
 import { IControlEventHandler, IKeyEvents, VelocityDirection } from "../../interfaces/interfaces";
 
-export class GalaxyController implements IControlEventHandler {
+export class PlayerController implements IControlEventHandler {
 
-    gameKey: string = 'Galaxy';
+    gameKey: string = 'Game';
     keyEvents: IKeyEvents[] = [];
 
     constructor() {
