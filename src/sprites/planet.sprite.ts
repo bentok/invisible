@@ -11,7 +11,7 @@ interface IPlanetConfig {
 const planetAttractor = (bodyA: any, bodyB: any) => {
   const xDiff = bodyA.position.x - bodyB.position.x;
   const yDiff = bodyA.position.y - bodyB.position.y;
-  if (xDiff > 300 || yDiff > 300) {
+  if ((xDiff > 300 || xDiff < -300) || (yDiff > 300 || yDiff < -300)) {
     return null;
   }
   return {

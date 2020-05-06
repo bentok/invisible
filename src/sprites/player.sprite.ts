@@ -3,7 +3,7 @@ import { ISpriteConfig } from '../interfaces/interfaces';
 
 const playerConfig = {
   rotationDegree: 5,
-  thrustSpeed: 0.02,
+  thrustSpeed: 0.01,
   angle: 90,
   scale: 0.15,
   frictionAir: 0.05,
