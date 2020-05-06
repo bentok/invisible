@@ -1,4 +1,4 @@
-import { GALAXY } from "../const/galaxy";
+import { GALAXY } from "../const/galaxy.const";
 import { IGalaxyResourceConstructor } from "../interfaces/interfaces";
 import { Plugin } from "matter";
 
@@ -33,11 +33,16 @@ export class Planet {
                 plugin: {
                   attractors: [
                     (bodyA: any, bodyB: any) => {
+                      const xDiff = bodyA.position.x - bodyB.position.x;
+                      const yDiff = bodyA.position.y - bodyB.position.y;
+                      if (xDiff > 100 || yDiff > 100) {
+                        return null;
+                      }
                       return {
                         x: (bodyA.position.x - bodyB.position.x) * 0.00001,
-                        y: (bodyA.position.y - bodyB.position.y) * 0.00001
-                      };
-                    }
+                        y: (bodyA.position.y - bodyB.position.y) * 0.00001,
+                      }
+                    },
                   ]
                 }
             },

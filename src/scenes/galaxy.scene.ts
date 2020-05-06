@@ -3,11 +3,12 @@ import {
     ISettingsConfig,
     Scene,
 } from '../lib';
-import { GALAXY } from "../const/galaxy";
+import { GALAXY } from "../const/galaxy.const";
 import { GalaxyMap } from "../objects/galaxy-system";
 import { GalaxyController } from '../objects/controls/galaxy-controller';
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Planet } from '../sprites/planet.sprite'; 
 
 const sceneConfig: ISettingsConfig = {
     active: false,
@@ -72,6 +73,7 @@ export class GalaxyScene extends Scene {
         // *****************************************************************
         // SPRITE CONTROLLER
         // *****************************************************************
+        this._sprite = new Planet(this.matter.world, { x: 0, y: 0, name: 'foobar' }, null);
         this._galaxyController = new GalaxyController();
         this._galaxyController.init();
         

@@ -1,4 +1,4 @@
-import { GALAXY } from "../const/galaxy";
+import { GALAXY } from "../const/galaxy.const";
 import { IGalaxyResourceConstructor } from "../interfaces/interfaces";
 
 export class Star {

@@ -23,3 +23,9 @@ export interface IControlEventHandler {
     init(): void;
     handleKeyPress(key: number, oldX: number, oldY: number): { xCoord: number, yCoord: number};
 }
+
+export interface ISpriteConfig {
+  x: number;
+  y: number;
+  name: string;
+}

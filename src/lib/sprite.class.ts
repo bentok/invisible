@@ -1,0 +1,1 @@
+export class Sprite extends Phaser.Physics.Matter.Sprite {}
