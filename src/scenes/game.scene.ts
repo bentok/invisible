@@ -35,30 +35,14 @@ export class GameScene extends Scene {
     this.planet = new Planet(this.matter.world, { x: GALAXY.width - 500, y: GALAXY.height - 500, name: 'Earth' }, null);
     this.add.existing(this.planet);
     
-    this.player = new Player(this.matter.world, { x: 0, y: 0, name: 'GreenShip' }, null);
+    this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
     
     generateStars(this, GALAXY.width, GALAXY.height, 800);
   }
 
   update() {
-    if (this?.cursorKeys?.left?.isDown) {
-      this.player.setVelocityX(-10);
-    } else if (this?.cursorKeys?.right?.isDown) {
-      this.player.setVelocityX(10);
-    } else {
-      this.player.setVelocityX(0);
-    }
-    if (this?.cursorKeys?.up?.isDown) {
-      this.player.setVelocityY(-10);
-    } else if (this?.cursorKeys?.down?.isDown) {
-      this.player.setVelocityY(10);
-    } else {
-      this.player.setVelocityY(0);
-    }
-
+    this.player.manageControls(this.cursorKeys);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    
-    this.player.update();
   }
 }
