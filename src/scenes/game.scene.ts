@@ -11,6 +11,7 @@ import {SpaceStation} from "../sprites/space-station.sprite";
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VelocityDirection } from '../interfaces/interfaces';
+import {Enemy} from "../sprites/enemy.sprite";
 
 const sceneConfig: ISettingsConfig = {
   active: false,
@@ -21,6 +22,7 @@ const sceneConfig: ISettingsConfig = {
 export class GameScene extends Scene {
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   private player: Player;
+  private enemy: Enemy;
 
   constructor() {
     super(sceneConfig);
@@ -50,6 +52,9 @@ export class GameScene extends Scene {
     this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
 
+    this.enemy = new Enemy(this.matter.world, { x: 600, y: 600, name: 'RedShip' });
+    this.add.existing(this.enemy);
+
     // fromEvent(document, 'keydown').pipe(
     //   map((key: any) => this.player.controller.handleKeyPress(key.keyCode))
     // ).subscribe(newPosition => {
@@ -66,5 +71,6 @@ export class GameScene extends Scene {
   update() {
     this.player.manageControls(this.cursorKeys);
     this.cameras.main.centerOn(this.player.x, this.player.y);
+    this.enemy.update(this.player);
   }
 }
