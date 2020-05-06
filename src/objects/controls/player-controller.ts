@@ -1,9 +1,12 @@
+import { PlayerState } from './../../services/player-state.service';
 import { IControlEventHandler, IKeyEvents, VelocityDirection } from "../../interfaces/interfaces";
 
 export class PlayerController implements IControlEventHandler {
 
     gameKey: string = 'Game';
     keyEvents: IKeyEvents[] = [];
+
+    private _playerState = new PlayerState();
 
     constructor() {
      }
@@ -20,29 +23,35 @@ export class PlayerController implements IControlEventHandler {
     }
 
     private createKeyMappings(): IKeyEvents[] {
+        
         const KEY_MAPPINGS: IKeyEvents[] = [
             {
                 key: Phaser.Input.Keyboard.KeyCodes.LEFT,
                 updateVelocity: () => {
-                    return { velocity: -10, direction: VelocityDirection.X };
+                    this._playerState.updateVelocity({ velocity: -5, direction: VelocityDirection.X });
+                    return this._playerState.getCurrentVelocity();
+                    
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.RIGHT,
                 updateVelocity: () => {
-                    return { velocity: 10, direction: VelocityDirection.X }
+                    this._playerState.updateVelocity({ velocity: 5, direction: VelocityDirection.X });
+                    return this._playerState.getCurrentVelocity();
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.DOWN,
                 updateVelocity: () => {
-                    return { velocity: 10, direction: VelocityDirection.Y }
+                    this._playerState.updateVelocity({ velocity: 5, direction: VelocityDirection.Y });
+                    return this._playerState.getCurrentVelocity();
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.UP,
                 updateVelocity: () => {
-                    return { velocity: -10, direction: VelocityDirection.Y }
+                    this._playerState.updateVelocity({ velocity: -5, direction: VelocityDirection.Y });
+                    return this._playerState.getCurrentVelocity();
                 }
             }
         ]
