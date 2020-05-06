@@ -4,9 +4,10 @@ import {
   Scene,
 } from '../lib';
 import { GALAXY } from "../const/galaxy.const";
-import {Player} from "../sprites/player.sprite";
-import {Planet} from "../sprites/planet.sprite";
+import { Player } from "../sprites/player.sprite";
+import { Planet } from "../sprites/planet.sprite";
 import { generateStars } from "../services/stars.service";
+import {SpaceStation} from "../sprites/space-station.sprite";
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VelocityDirection } from '../interfaces/interfaces';
@@ -20,10 +21,6 @@ const sceneConfig: ISettingsConfig = {
 export class GameScene extends Scene {
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   private player: Player;
-  private earth: Planet;
-  private mars: Planet;
-  private jupiter: Planet;
-  private moon; Planet;
 
   constructor() {
     super(sceneConfig);
@@ -38,14 +35,17 @@ export class GameScene extends Scene {
     
     this.matter.enableAttractorPlugin();
     
-    this.earth = new Planet(this.matter.world, { x: GALAXY.width - 500, y: GALAXY.height - 500, name: 'Earth' }, { scale: 3 });
-    this.add.existing(this.earth);
+    const earth = new Planet(this.matter.world, { x: GALAXY.width - 500, y: 200, name: 'Earth' }, { scale: 3 });
+    this.add.existing(earth);
 
-    this.mars = new Planet(this.matter.world, { x: 300, y: 600, name: 'Mars' }, { scale: 3});
-    this.add.existing(this.mars);
+    const mars = new Planet(this.matter.world, { x: 300, y: 600, name: 'Mars' }, { scale: 3});
+    this.add.existing(mars);
 
-    this.jupiter = new Planet(this.matter.world, { x: GALAXY.width / 2, y: GALAXY.height / 3, name: 'Jupiter' }, { isAttractor: true, scale: 5, mass: 5 });
-    this.add.existing(this.jupiter);
+    const jupiter = new Planet(this.matter.world, { x: GALAXY.width / 2, y: GALAXY.height / 2, name: 'Jupiter' }, { isAttractor: true, scale: 5, mass: 5 });
+    this.add.existing(jupiter);
+    
+    const spaceStation = new SpaceStation(this.matter.world, { x: GALAXY.width - 200, y: GALAXY.height - 300, name: 'SpaceStation' }, {});
+    this.add.existing(spaceStation);
     
     this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);

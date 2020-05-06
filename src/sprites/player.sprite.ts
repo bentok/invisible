@@ -4,7 +4,7 @@ import { PlayerController } from '../objects/controls/player-controller';
 
 const playerConfig = {
   rotationDegree: 5,
-  thrustSpeed: 0.02,
+  thrustSpeed: 0.01,
   angle: 90,
   scale: 0.25,
   frictionAir: 0.05,
