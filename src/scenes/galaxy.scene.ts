@@ -74,7 +74,7 @@ export class GalaxyScene extends Scene {
         // *****************************************************************
         // SPRITE CONTROLLER
         // *****************************************************************
-        this._sprite = new Planet(this.matter.world, { x: 0, y: 0, name: 'foobar' }, null);
+        this._sprite = new Planet(this.matter.world, { x: 0, y: 0, name: 'foobar' }, { scale: 3 });
         this._galaxyController = new GalaxyController();
         this._galaxyController.init();
         

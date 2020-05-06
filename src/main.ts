@@ -18,7 +18,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
         y: 0,
       },
       // "plugins.attractors": true,
-      debug: true,
+      // debug: true,
     },
   },
   scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene, GalaxyScene],
