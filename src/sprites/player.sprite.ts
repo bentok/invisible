@@ -14,18 +14,6 @@ const playerConfig = {
 
 const degreeToRadian = d => d * Math.PI / 180;
 
-const playerConfig = {
-  rotationDegree: 5,
-  thrustSpeed: 0.02,
-  angle: 90,
-  scale: 0.15,
-  frictionAir: 0.05,
-  mass: 30,
-  depth: 1000,
-};
-
-const degreeToRadian = d => d * Math.PI / 180;
-
 export class Player extends Sprite {
   rotationRadian: number;
   thrustSpeed: number;
