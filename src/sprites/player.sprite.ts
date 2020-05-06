@@ -1,41 +1,52 @@
 import { Sprite } from '../lib/sprite.class';
 import { ISpriteConfig } from '../interfaces/interfaces';
 
-export class Player extends Sprite {
-  constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, playerConfig: any) {
-    super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name);
-    this.setScale(0.25, 0.25);
-    this.depth = 1000;
-  }
-  
-  public update() {
-    this.manageRotation()
-  }
+const playerConfig = {
+  rotationDegree: 5,
+  thrustSpeed: 0.02,
+  angle: 90,
+  scale: 0.15,
+  frictionAir: 0.05,
+  mass: 30,
+  depth: 1000,
+};
 
-  determineAngle(x: number, y: number): number {
-    if (x === 0 && y < 0) {
-      return 0;
-    } else if (x > 0 && y < 0) {
-      return 45;
-    } else if (x > 0 && y === 0) {
-      return 90;
-    } else if (x > 0 && y > 0) {
-      return 135;
-    } else if (x === 0 && y > 0) {
-      return 180;
-    } else if (x < 0 && y > 0) {
-      return 225;
-    } else if (x < 0 && y === 0 ) {
-      return 270;
-    } else if (x < 0 && y < 0 ) {
-      return 315;
-    }
-    return 90;
-  };
+const degreeToRadian = d => d * Math.PI / 180;
+
+export class Player extends Sprite {
+  rotationRadian: number;
+  thrustSpeed: number;
   
-  manageRotation() {
-    const { x, y } = (<any>this).body.gameObject.body.velocity;
-    this.setAngle(this.determineAngle(x, y))
+  constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, {
+    rotationDegree,
+    thrustSpeed,
+    angle,
+    scale,
+    frictionAir,
+    mass,
+    depth,
+  } = playerConfig) {
+    super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name);
+    this.setScale(scale, scale);
+    this.setAngle(angle);
+    this.setFrictionAir(frictionAir);
+    this.setMass(mass);
+    this.depth = depth;
+    
+    this.rotationRadian = degreeToRadian(rotationDegree);
+    this.thrustSpeed = thrustSpeed;
+  }
+  
+  public manageControls({ up, right, left }: Phaser.Types.Input.Keyboard.CursorKeys) {
+    if (up?.isDown) {
+      this.thrustLeft(this.thrustSpeed);
+    }
+    
+    if (right?.isDown) {
+      this.setRotation(this.rotation += this.rotationRadian);
+    } else if (left?.isDown) {
+      this.setRotation(this.rotation -= this.rotationRadian);
+    }
   }
   
 }

@@ -17,7 +17,10 @@ const sceneConfig: ISettingsConfig = {
 export class GameScene extends Scene {
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   private player: Player;
-  private planet: Planet;
+  private earth: Planet;
+  private mars: Planet;
+  private jupiter: Planet;
+  private moon; Planet;
 
   constructor() {
     super(sceneConfig);
@@ -32,33 +35,23 @@ export class GameScene extends Scene {
     
     this.matter.enableAttractorPlugin();
     
-    this.planet = new Planet(this.matter.world, { x: GALAXY.width - 500, y: GALAXY.height - 500, name: 'Earth' }, null);
-    this.add.existing(this.planet);
+    this.earth = new Planet(this.matter.world, { x: GALAXY.width - 500, y: GALAXY.height - 500, name: 'Earth' }, { scale: 3 });
+    this.add.existing(this.earth);
+
+    this.mars = new Planet(this.matter.world, { x: 300, y: 600, name: 'Mars' }, { scale: 3});
+    this.add.existing(this.mars);
+
+    this.jupiter = new Planet(this.matter.world, { x: GALAXY.width / 2, y: GALAXY.height / 3, name: 'Jupiter' }, { isAttractor: true, scale: 5, mass: 5 });
+    this.add.existing(this.jupiter);
     
-    this.player = new Player(this.matter.world, { x: 0, y: 0, name: 'GreenShip' }, null);
+    this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
     
     generateStars(this, GALAXY.width, GALAXY.height, 800);
   }
 
   update() {
-    if (this?.cursorKeys?.left?.isDown) {
-      this.player.setVelocityX(-10);
-    } else if (this?.cursorKeys?.right?.isDown) {
-      this.player.setVelocityX(10);
-    } else {
-      this.player.setVelocityX(0);
-    }
-    if (this?.cursorKeys?.up?.isDown) {
-      this.player.setVelocityY(-10);
-    } else if (this?.cursorKeys?.down?.isDown) {
-      this.player.setVelocityY(10);
-    } else {
-      this.player.setVelocityY(0);
-    }
-
+    this.player.manageControls(this.cursorKeys);
     this.cameras.main.centerOn(this.player.x, this.player.y);
-    
-    this.player.update();
   }
 }
