@@ -10,15 +10,21 @@ export interface IGalaxyResourceConstructor {
     rnd: Phaser.Math.RandomDataGenerator;
 }
 
-// Generic key interfaces
 export enum VelocityDirection {
+    NOT_SET,
     X,
     Y
 }
 
+export interface Velocity {
+    velocity: number;
+    direction: VelocityDirection;
+}
+
+// Generic key interfaces
 export interface IKeyEvents {
     key: number;
-    updateVelocity: () => { velocity: number, direction: VelocityDirection } | null;
+    updateVelocity: () => Velocity | null;
 }
 
 export interface IControlEventHandler {
@@ -26,7 +32,7 @@ export interface IControlEventHandler {
     keyEvents: IKeyEvents[];
 
     init(): void;
-    handleKeyPress(key: number): { velocity: number, direction: VelocityDirection } | null;
+    handleKeyPress(key: number): Velocity | null;
 }
 
 export interface ISpriteConfig {
