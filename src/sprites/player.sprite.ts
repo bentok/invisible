@@ -1,11 +1,12 @@
 import { Sprite } from '../lib/sprite.class';
 import { ISpriteConfig } from '../interfaces/interfaces';
+import { PlayerController } from '../objects/controls/player-controller';
 
 const playerConfig = {
   rotationDegree: 5,
   thrustSpeed: 0.01,
   angle: 90,
-  scale: 0.15,
+  scale: 0.25,
   frictionAir: 0.05,
   mass: 30,
   depth: 1000,
@@ -16,6 +17,7 @@ const degreeToRadian = d => d * Math.PI / 180;
 export class Player extends Sprite {
   rotationRadian: number;
   thrustSpeed: number;
+  controller = new PlayerController();
   
   constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, {
     rotationDegree,
@@ -41,6 +43,7 @@ export class Player extends Sprite {
       console.error('you died');
     });
     
+    this.controller.init();
   }
   
   public manageControls({ up, right, left }: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -54,5 +57,6 @@ export class Player extends Sprite {
       this.setRotation(this.rotation -= this.rotationRadian);
     }
   }
+
   
 }
