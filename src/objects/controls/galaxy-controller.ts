@@ -1,4 +1,4 @@
-import { IControlEventHandler, IKeyEvents } from "../../interfaces/interfaces";
+import { IControlEventHandler, IKeyEvents, VelocityDirection } from "../../interfaces/interfaces";
 
 export class GalaxyController implements IControlEventHandler {
 
@@ -13,38 +13,36 @@ export class GalaxyController implements IControlEventHandler {
 
     }
 
-    handleKeyPress(key: number, oldX: number, oldY: number):{ xCoord: number, yCoord: number } {
+    handleKeyPress(key: number):{ velocity: number, direction: VelocityDirection } | null{
         const keyFound = this.keyEvents.find(keyEvent => keyEvent.key === key);
-        const newCoord = keyFound?.updatedSpritePosition(oldX, oldY);
-        return !!newCoord ? newCoord : { xCoord: oldX, yCoord: oldY };
+        const updatedVelocity = keyFound?.updateVelocity() ?? null;
+        return updatedVelocity;
     }
 
     private createKeyMappings(): IKeyEvents[] {
         const KEY_MAPPINGS: IKeyEvents[] = [
             {
                 key: Phaser.Input.Keyboard.KeyCodes.LEFT,
-                updatedSpritePosition: (x: number, y: number) => {
-                    const xCoord = x - 10 >= 0 ? x - 10 : 0;
-                    return { xCoord, yCoord: y };
+                updateVelocity: () => {
+                    return { velocity: -10, direction: VelocityDirection.X };
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-                updatedSpritePosition: (x: number, y: number) => {
-                    return { xCoord: x + 10, yCoord: y };
+                updateVelocity: () => {
+                    return { velocity: 10, direction: VelocityDirection.X }
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.DOWN,
-                updatedSpritePosition: (x: number, y: number) => {
-                    return { xCoord: x, yCoord: y + 10 };
+                updateVelocity: () => {
+                    return { velocity: 10, direction: VelocityDirection.Y }
                 }
             },
             {
                 key: Phaser.Input.Keyboard.KeyCodes.UP,
-                updatedSpritePosition: (x: number, y: number) => {
-                    const yCoord = y - 10 >= 0 ? y - 10 : 0;
-                    return { xCoord: x, yCoord };
+                updateVelocity: () => {
+                    return { velocity: -10, direction: VelocityDirection.Y }
                 }
             }
         ]

@@ -9,6 +9,7 @@ import { GalaxyController } from '../objects/controls/galaxy-controller';
 import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Planet } from '../sprites/planet.sprite'; 
+import { VelocityDirection } from '../interfaces/interfaces';
 
 const sceneConfig: ISettingsConfig = {
     active: false,
@@ -96,10 +97,14 @@ export class GalaxyScene extends Scene {
 
         // TODO: When to unsubscribe?
         fromEvent(document, 'keydown').pipe(
-            map((key: any) => this._galaxyController.handleKeyPress(key.keyCode, this._sprite.x, this._sprite.y))
+            map((key: any) => this._galaxyController.handleKeyPress(key.keyCode))
         ).subscribe(newPosition => {
-            const { xCoord, yCoord } = newPosition;
-            this._sprite.setPosition(xCoord, yCoord);
+            if (newPosition?.direction === VelocityDirection.X) {
+                this._sprite.setVelocityX(newPosition.velocity);
+            } else if (newPosition?.direction === VelocityDirection.Y){
+                this._sprite.setVelocityY(newPosition.velocity);
+            }
+            
         })
         
 

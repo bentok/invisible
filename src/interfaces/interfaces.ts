@@ -11,9 +11,14 @@ export interface IGalaxyResourceConstructor {
 }
 
 // Generic key interfaces
+export enum VelocityDirection {
+    X,
+    Y
+}
+
 export interface IKeyEvents {
     key: number;
-    updatedSpritePosition: (oldX: number, oldY: number) => {xCoord: number, yCoord: number };
+    updateVelocity: () => { velocity: number, direction: VelocityDirection } | null;
 }
 
 export interface IControlEventHandler {
@@ -21,7 +26,7 @@ export interface IControlEventHandler {
     keyEvents: IKeyEvents[];
 
     init(): void;
-    handleKeyPress(key: number, oldX: number, oldY: number): { xCoord: number, yCoord: number};
+    handleKeyPress(key: number): { velocity: number, direction: VelocityDirection } | null;
 }
 
 export interface ISpriteConfig {
