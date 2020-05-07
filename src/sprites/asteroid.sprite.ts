@@ -4,6 +4,10 @@ import { between } from '../lib/Math';
 import { GALAXY } from '../const/galaxy.const';
 import { ASTEROID } from '../const/asteroid.const';
 
+export interface SoundEffects {
+  explosion: () => void;
+}
+
 interface IAsteroidConfig {
   mass: number,
   scale: number,
@@ -21,8 +25,9 @@ export class Asteroid extends Sprite {
   private dustEmitter: any;
   public isDestroyed = false;
   public isOffScreen = false;
+  private soundEffects: SoundEffects;
 
-  constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, asteroidConfig: IAsteroidConfig) {
+  constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, soundEffects: SoundEffects, asteroidConfig: IAsteroidConfig) {
     super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name);
     this.setScale(asteroidConfig.scale, asteroidConfig.scale);
     this.setFrictionAir(asteroidConfig.frictionAir);
@@ -39,6 +44,7 @@ export class Asteroid extends Sprite {
       this.velocityX = -2;
     }
     this.dustEmitter = this.scene.add.particles('fake');
+    this.soundEffects = soundEffects;
 
     this.setVelocity(this.velocityX, this.velocityY);
 
@@ -46,9 +52,9 @@ export class Asteroid extends Sprite {
       let explosion = this.scene.add.particles('fake').createEmitter({
         x: this.x,
         y: this.y,
-        speed: { min: -300, max: 300 },
-        angle: { min: 0, max: 360 },
-        scale: { start: this.scale, end: 0 },
+        speed: {min: -300, max: 300},
+        angle: {min: 0, max: 360},
+        scale: {start: this.scale, end: 0},
         blendMode: 'SCREEN',
         gravityY: -this.y,
         active: true,
@@ -80,11 +86,11 @@ export class Asteroid extends Sprite {
     this.dustEmitter.createEmitter({
       // radial: false,
       lifespan: 100,
-      speedX: { min: 200, max: 400 },
+      speedX: {min: 200, max: 400},
       // quantity: 2,
       // gravityY: -this.y,
       active: true,
-      scale: { start: this.scale, end: 0, ease: 'Power3' },
+      scale: {start: this.scale, end: 0, ease: 'Power3'},
       blendMode: 'ADD'
     }).emitParticle(5, this.x, this.y);
   }
