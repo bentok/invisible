@@ -6,10 +6,10 @@ const playerConfig = {
   rotationDegree: 10,
   thrustSpeed: 0.01,
   angle: 90,
-  scale: 0.15,
+  scale: 0.5,
   frictionAir: 0.05,
   mass: 30,
-  depth: 1000,
+  depth: 1000
 };
 
 const degreeToRadian = (d: number) => d * Math.PI / 180;
@@ -39,8 +39,9 @@ export class Player extends Sprite {
     this.thrustSpeed = thrustSpeed;
     
     this.setOnCollide(() => {
+      console.log('COLLISION');
       // make explosion animation, and restart scene
-      this.visible = false;
+      //this.visible = false;
       this.disableInteractive();
     });
     
