@@ -1,4 +1,6 @@
-# invisible
+# Space Jammin'
+
+This is a game jam submission for Weekly [Game Jam 147](https://itch.io/jam/weekly-game-jam-147)
 
 ## Setup the application
 
