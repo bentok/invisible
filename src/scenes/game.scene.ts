@@ -12,7 +12,7 @@ import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VelocityDirection } from '../interfaces/interfaces';
 import {Enemy} from "../sprites/enemy.sprite";
-import {Asteroid} from "../sprites/asteroid.sprite";
+import { AsteroidService } from "../services/asteroid.service";
 import { between } from '../lib/Math';
 
 const sceneConfig: ISettingsConfig = {
@@ -25,8 +25,7 @@ export class GameScene extends Scene {
   private cursorKeys: Phaser.Types.Input.Keyboard.CursorKeys;
   private player: Player;
   private enemy: Enemy;
-  private asteroids: Asteroid[];
-  private numAsteroids: number;
+  private asteroidService: AsteroidService;
 
   constructor() {
     super(sceneConfig);
@@ -39,14 +38,10 @@ export class GameScene extends Scene {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     
     this.cameras.main.setBounds(0, 0, GALAXY.width, GALAXY.height);
-    // this.cameras.main.setZoom(3);
     this.cameras.main.setZoom(2);
     
     
     this.matter.enableAttractorPlugin();
-
-    this.asteroids = [];
-    this.numAsteroids = 10;
     
     const earth = new Planet(this.matter.world, { x: GALAXY.width - 500, y: 200, name: 'Earth' }, { scale: 3 });
     this.add.existing(earth);
@@ -70,13 +65,10 @@ export class GameScene extends Scene {
     this.enemy = new Enemy(this.matter.world, { x: 600, y: 600, name: 'RedShip' });
     this.add.existing(this.enemy);
 
-    for (let i = 0; i < this.numAsteroids; i++) {
-      let asteroidX = between(0, GALAXY.width);
-      let asteroidY = between(0, GALAXY.height);
-      let asteroid = new Asteroid(this.matter.world, { x: asteroidX, y: asteroidY, name: 'fake' });
-      this.add.existing(asteroid);
-      this.asteroids.push(asteroid);
-    }
+    // TODO: WARNING!!! Adding more asteroids causes game to crash cause is within 'setOnCollide' particle creation
+    // Possible fix: Ensure correct directional velocity is applied when initializing asteroid - seems cause is a performance issue?
+    let maxAsteroids = 10;
+    this.asteroidService = new AsteroidService(this.matter.world, maxAsteroids);
 
     // fromEvent(document, 'keydown').pipe(
     //   map((key: any) => this.player.controller.handleKeyPress(key.keyCode))
@@ -95,8 +87,6 @@ export class GameScene extends Scene {
     this.player.manageControls(this.cursorKeys);
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.enemy.update(this.player);
-    for (let i = 0; i < this.numAsteroids; i++) {
-      this.asteroids[i].update();
-    }
+    this.asteroidService.update();
   }
 }
