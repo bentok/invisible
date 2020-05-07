@@ -33,11 +33,14 @@ export class GameScene extends Scene {
   }
 
   create() {
+
+    this.sound.add('music').play();
+    
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     
     this.cameras.main.setBounds(0, 0, GALAXY.width, GALAXY.height);
     // this.cameras.main.setZoom(3);
-    this.cameras.main.setZoom(.8);
+    this.cameras.main.setZoom(2);
     
     
     this.matter.enableAttractorPlugin();
@@ -57,7 +60,7 @@ export class GameScene extends Scene {
     const spaceStation = new SpaceStation(this.matter.world, { x: GALAXY.width - 200, y: GALAXY.height - 300, name: 'SpaceStation' }, {});
     this.add.existing(spaceStation);
     
-    this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
+    this.player = new Player(this.matter.world, { x: 20, y: 300, name: 'GreenShip' });
     this.add.existing(this.player);
 
     fromEvent(document, 'keydown').subscribe((keyPressed: any) => {

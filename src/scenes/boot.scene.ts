@@ -90,5 +90,7 @@ export class BootScene extends Scene {
     this.load.image('RedShip', './src/assets/itchio_space_pixels/pixel_ship_red.png');
     this.load.image('SpaceStation', './src/assets/itchio_space_pixels/pixel_station_blue.png');
     this.load.image('Laser', './src/assets/itchio_space_pixels/laser.png');
+
+    this.load.audio('music', ['./src/assets/sound/Space Riddle.mp3']);
   }
 }
