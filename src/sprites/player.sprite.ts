@@ -1,7 +1,6 @@
 import { Sprite } from '../lib/sprite.class';
 import { ISpriteConfig, PlayerAction } from '../interfaces/interfaces';
 import { PlayerController } from '../objects/controls/player-controller';
-import { Physics } from 'phaser';
 
 export interface SoundEffects {
   laser: () => void;
@@ -12,7 +11,7 @@ const playerConfig = {
   rotationDegree: 10,
   thrustSpeed: 0.01,
   angle: 90,
-  scale: 0.5,
+  scale: 0.25,
   frictionAir: 0.05,
   mass: 30,
   depth: 1000,
@@ -25,6 +24,7 @@ export class Player extends Sprite {
   thrustSpeed: number;
   controller = new PlayerController();
   soundEffects: SoundEffects;
+  destroyed: boolean;
   
   constructor(
     world: Phaser.Physics.Matter.World,
@@ -45,6 +45,7 @@ export class Player extends Sprite {
     this.setFrictionAir(frictionAir);
     this.setMass(mass);
     this.depth = depth;
+    (<any>this.body).name = 'Player';
     
     this.rotationRadian = degreeToRadian(rotationDegree);
     this.thrustSpeed = thrustSpeed;
@@ -52,10 +53,21 @@ export class Player extends Sprite {
     this.soundEffects = soundEffects;
     
     this.setOnCollide(() => {
-      console.log('COLLISION');
-      // make explosion animation, and restart scene
-      //this.visible = false;
+      let explosion = this.scene?.add.particles('fake').createEmitter({
+        x: this.x,
+        y: this.y,
+        speed: {min: -300, max: 300},
+        angle: {min: 0, max: 360},
+        scale: {start: this.scale, end: 0},
+        blendMode: 'SCREEN',
+        gravityY: -this.y,
+        active: true,
+        lifespan: 250,
+      });
+      explosion?.explode(15, this.x, this.y);
+      this.visible = false;
       this.disableInteractive();
+      this.destroyed = true;
     });
 
     this.controller.init();
@@ -77,17 +89,15 @@ export class Player extends Sprite {
   }
 
   public handleAction(keyPressed: number): void {
-    const actionToTake = this.controller.keyEvents.find(key => key.key === keyPressed);
-    switch (actionToTake?.action) {
-      case PlayerAction.FIRE_LASER:
-        const laser = this.scene.matter.add.sprite(this.x, this.y, 'Laser');
-        const velocity = this.determineLaserVelocity();
-        const { x, y } = velocity;
-        laser.setVelocity(x, y);
-        break;
-      default:
-        break;
-    }
+    // const actionToTake = this.controller.keyEvents.find(key => key.key === keyPressed);
+    // switch (actionToTake?.action) {
+    //   case PlayerAction.FIRE_LASER:
+    //     const laser = new Laser(this.scene.matter.world, { x: this.x + 50, y: this.y + 50, name: 'Laser' });
+    //     this.scene.add.existing(laser);
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
 
   private determineLaserVelocity(): { x: number, y: number } {

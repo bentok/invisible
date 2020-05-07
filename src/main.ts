@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { BootScene, GameScene, MainMenuScene } from './scenes';
+import {BootScene, GameScene, MainMenuScene, MissionCompleteScene} from './scenes';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   title: 'Invisible (Working Title)',
@@ -20,7 +20,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       // debug: true,
     },
   },
-  scene: [BootScene, MainMenuScene, GameScene],
+  scene: [BootScene, MainMenuScene, GameScene, MissionCompleteScene],
 
   parent: 'content',
   backgroundColor: '#000000',
