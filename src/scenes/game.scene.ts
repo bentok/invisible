@@ -34,6 +34,7 @@ export class GameScene extends Scene {
   create() {
 
     this.sound.add('music').play();
+    this.sound.add('player_laser');
     
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     
@@ -54,8 +55,12 @@ export class GameScene extends Scene {
     
     const spaceStation = new SpaceStation(this.matter.world, { x: GALAXY.width - 200, y: GALAXY.height - 300, name: 'SpaceStation' }, {});
     this.add.existing(spaceStation);
-    
-    this.player = new Player(this.matter.world, { x: 20, y: 300, name: 'GreenShip' });
+
+    const playerSounds = {
+      laser: () => this.sound.play('player_laser'),
+      rockets: () => this.sound.play('player_rockets')
+    };
+    this.player = new Player(this.matter.world, { x: 20, y: 300, name: 'GreenShip' }, playerSounds);
     this.add.existing(this.player);
 
     fromEvent(document, 'keydown').subscribe((keyPressed: any) => {
@@ -68,7 +73,8 @@ export class GameScene extends Scene {
     // TODO: WARNING!!! Adding more asteroids causes game to crash cause is within 'setOnCollide' particle creation
     // Possible fix: Ensure correct directional velocity is applied when initializing asteroid - seems cause is a performance issue?
     let maxAsteroids = 10;
-    this.asteroidService = new AsteroidService(this.matter.world, maxAsteroids);
+    const asteroidSounds = { explosion: () => this.sound.play('explosion') };
+    this.asteroidService = new AsteroidService(this.matter.world, maxAsteroids, asteroidSounds);
 
     // fromEvent(document, 'keydown').pipe(
     //   map((key: any) => this.player.controller.handleKeyPress(key.keyCode))

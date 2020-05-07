@@ -8,11 +8,13 @@ export class AsteroidService {
     private maxAsteroids: number;
     private numAsteroids: number;
     private asteroids: Asteroid[];
+    private soundEffects: any;
 
-    constructor(world: Phaser.Physics.Matter.World, maxAsteroids: number) {
+    constructor(world: Phaser.Physics.Matter.World, maxAsteroids: number, soundEffects) {
         this.world = world;
         this.maxAsteroids = maxAsteroids;
         this.asteroids = [];
+        this.soundEffects = soundEffects;
 
         this.spawnAsteroids(this.maxAsteroids);
     };
@@ -68,7 +70,7 @@ export class AsteroidService {
                     break;
                 }
             }
-            let asteroid = new Asteroid(this.world, { x: asteroidX, y: asteroidY, name: imgSrc }, asteroidConfig);
+            let asteroid = new Asteroid(this.world, { x: asteroidX, y: asteroidY, name: imgSrc }, this.soundEffects, asteroidConfig);
             this.world.scene.add.existing(asteroid);
             this.asteroids.push(asteroid);
         }
