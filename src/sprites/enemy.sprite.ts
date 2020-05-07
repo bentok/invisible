@@ -1,10 +1,10 @@
 import { Sprite } from '../lib/sprite.class';
 import { ISpriteConfig } from '../interfaces/interfaces';
-import { PlayerController } from '../objects/controls/player-controller';
+import {Player} from "./player.sprite";
 
-const playerConfig = {
-  rotationDegree: 10,
-  thrustSpeed: 0.01,
+const enemyConfig = {
+  rotationDegree: 5,
+  thrustSpeed: 0.009,
   angle: 90,
   scale: 0.15,
   frictionAir: 0.05,
@@ -14,11 +14,11 @@ const playerConfig = {
 
 const degreeToRadian = d => d * Math.PI / 180;
 
-export class Player extends Sprite {
+export class Enemy extends Sprite {
   rotationRadian: number;
   thrustSpeed: number;
-  controller = new PlayerController();
-  
+  isDestroyed = false;
+
   constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, {
     rotationDegree,
     thrustSpeed,
@@ -27,37 +27,46 @@ export class Player extends Sprite {
     frictionAir,
     mass,
     depth,
-  } = playerConfig) {
+  } = enemyConfig) {
     super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name);
     this.setScale(scale, scale);
     this.setAngle(angle);
     this.setFrictionAir(frictionAir);
     this.setMass(mass);
     this.depth = depth;
-    
+
     this.rotationRadian = degreeToRadian(rotationDegree);
     this.thrustSpeed = thrustSpeed;
-    
+
     this.setOnCollide(() => {
-      // make explosion animation, and restart scene
-      this.visible = false;
-      this.disableInteractive();
+      this.isDestroyed = true;
+      this.destroy(true);
     });
-    
-    this.controller.init();
+
   }
-  
-  public manageControls({ up, right, left }: Phaser.Types.Input.Keyboard.CursorKeys) {
-    if (up?.isDown) {
+
+  public update(player: Player) {
+    if (!this.isDestroyed) {
+      const getAngle = (cx, cy, ex, ey) => {
+        const dy = ey - cy;
+        const dx = ex - cx;
+        return Math.atan2(dx, dy) * 180 / Math.PI;
+      };
+      function angle360(cx, cy, ex, ey) {
+        let theta = getAngle(cx, cy, ex, ey);
+        if (theta < 0) theta = 360 + theta;
+        return theta;
+      }
+      
+      const rad = angle360(this.x, this.y, player?.x, player.y);
+      
       this.thrustLeft(this.thrustSpeed);
-    }
-    
-    if (right?.isDown) {
-      this.setRotation(this.rotation += this.rotationRadian);
-    } else if (left?.isDown) {
-      this.setRotation(this.rotation -= this.rotationRadian);
+      
+      if (rad != this.rotationRadian) {
+        this.angle = -Math.abs((rad + 180) % 360);
+      }
     }
   }
 
-  
+
 }
