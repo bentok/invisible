@@ -27,7 +27,7 @@ export class MainMenuScene extends Scene {
       'it being intercepted and causing the existential threat to grow in its\n' +
       'level of concerningness.\n' +
       '\n' +
-      'You must personally deliver the data to \'the star base. You are almost\n' +
+      'You must personally deliver the data to the star base. You are almost\n' +
       'there but a bounty hunter is on your tail, and the space station has\n' +
       'turned on cloaking to conceal its location until you have eliminate the \n' +
       'bounty hunter. But your weapon systems are down. \n' +

@@ -24,11 +24,11 @@ export class MissionCompleteScene extends Scene {
       'it being intercepted and causing the existential threat to grow in its\n' +
       'level of concerningness.\n' +
       '\n' +
-      'You personally delivered the data to \'the star base. You were almost\n' +
+      'You personally delivered the data to the star base. You were almost\n' +
       'there but a bounty hunter was on your tail, and the space station had\n' +
       'turned on cloaking to conceal its location until you eliminated the \n' +
       'bounty hunter. But your weapon systems were down. And you got creative by\n' +
-      'making crazy maneuvers and making the bounty hunter crash\n' +
+      'making crazy maneuvers and making the bounty hunter crash.\n' +
       '\n' +
       'Smooth moves!', { fill: '#FFFFFF' }).setFontSize(16)
   }
