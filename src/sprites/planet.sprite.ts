@@ -6,6 +6,7 @@ interface IPlanetConfig {
   mass?: number;
   isStatic?: boolean;
   scale?: number;
+  depth?: number;
 }
 
 const planetAttractor = (bodyA: any, bodyB: any) => {
@@ -15,8 +16,8 @@ const planetAttractor = (bodyA: any, bodyB: any) => {
     return null;
   }
   return {
-    x: (bodyA.position.x - bodyB.position.x) * 0.00002,
-    y: (bodyA.position.y - bodyB.position.y) * 0.00002,
+    x: (bodyA.position.x - bodyB.position.x) * 0.000025,
+    y: (bodyA.position.y - bodyB.position.y) * 0.000025,
   }
 };
 
@@ -26,6 +27,7 @@ export class Planet extends Sprite {
     mass = 2,
     isStatic = true,
     scale = 1,
+    depth = 1000,
   }: IPlanetConfig) {
     const options = {
       mass,
@@ -40,5 +42,7 @@ export class Planet extends Sprite {
     }
     super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name, undefined, options);
     this.setScale(scale, scale);
+
+    this.depth = depth;
   }
 }

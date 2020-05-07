@@ -1,7 +1,7 @@
 import { ITextStyle, Scene, Text } from './lib';
 
 const buttonRestStyle = {
-    fill: '#FFFFFF',
+    fill: '#00ffff',
 };
 
 const buttonHoverStyle = {

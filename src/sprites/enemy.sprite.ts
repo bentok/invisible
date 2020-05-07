@@ -4,9 +4,9 @@ import {Player} from "./player.sprite";
 
 const enemyConfig = {
   rotationDegree: 5,
-  thrustSpeed: 0.009,
+  thrustSpeed: 0.01,
   angle: 90,
-  scale: 0.15,
+  scale: 0.25,
   frictionAir: 0.05,
   mass: 30,
   depth: 1000,
@@ -39,6 +39,18 @@ export class Enemy extends Sprite {
     this.thrustSpeed = thrustSpeed;
 
     this.setOnCollide(() => {
+      let explosion = this.scene?.add.particles('fake').createEmitter({
+        x: this.x,
+        y: this.y,
+        speed: {min: -300, max: 300},
+        angle: {min: 0, max: 360},
+        scale: {start: this.scale, end: 0},
+        blendMode: 'SCREEN',
+        gravityY: -this.y,
+        active: true,
+        lifespan: 250
+      });
+      explosion?.explode(15, this.x, this.y);
       this.isDestroyed = true;
       this.destroy(true);
     });

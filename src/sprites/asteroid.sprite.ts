@@ -43,13 +43,13 @@ export class Asteroid extends Sprite {
     if (this.velocityY == 0) {
       this.velocityX = -2;
     }
-    this.dustEmitter = this.scene.add.particles('fake');
+    // this.dustEmitter = this.scene.add.particles('fake');
     this.soundEffects = soundEffects;
 
     this.setVelocity(this.velocityX, this.velocityY);
 
     this.setOnCollide(() => {
-      let explosion = this.scene.add.particles('fake').createEmitter({
+      let explosion = this.scene?.add.particles('fake').createEmitter({
         x: this.x,
         y: this.y,
         speed: {min: -300, max: 300},
@@ -60,7 +60,7 @@ export class Asteroid extends Sprite {
         active: true,
         lifespan: 250
       });
-      explosion.explode(15, this.x, this.y);
+      explosion?.explode(15, this.x, this.y);
       this.isDestroyed = true;
       this.destroy(true);
     });
@@ -70,7 +70,7 @@ export class Asteroid extends Sprite {
     this.checkIfOffScreen();
     if (!this.isDestroyed && !this.isOffScreen) {
       this.applyForces();
-      this.applyParticles();
+      // this.applyParticles();
     } else {
       this.destroy(true);
     }

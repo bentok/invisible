@@ -26,13 +26,15 @@ export class GameScene extends Scene {
   private player: Player;
   private enemy: Enemy;
   private asteroidService: AsteroidService;
+  private faded = false;
+  private spaceStation: SpaceStation;
 
   constructor() {
     super(sceneConfig);
   }
 
   create() {
-
+    this.faded = false;
     this.sound.add('music').play();
     this.sound.add('player_laser');
     
@@ -53,8 +55,8 @@ export class GameScene extends Scene {
     const jupiter = new Planet(this.matter.world, { x: GALAXY.width / 2, y: GALAXY.height / 2, name: 'Jupiter' }, { isAttractor: true, scale: 5, mass: 5 });
     this.add.existing(jupiter);
     
-    const spaceStation = new SpaceStation(this.matter.world, { x: GALAXY.width - 200, y: GALAXY.height - 300, name: 'SpaceStation' }, {});
-    this.add.existing(spaceStation);
+    this.spaceStation = new SpaceStation(this.matter.world, { x: GALAXY.width - 200, y: GALAXY.height - 300, name: 'SpaceStation' }, {});
+    this.add.existing(this.spaceStation);
 
     const playerSounds = {
       laser: () => this.sound.play('player_laser'),
@@ -67,7 +69,7 @@ export class GameScene extends Scene {
       this.player.handleAction(keyPressed.keyCode);
     });
     
-    this.enemy = new Enemy(this.matter.world, { x: 600, y: 600, name: 'RedShip' });
+    this.enemy = new Enemy(this.matter.world, { x: 400, y: 400, name: 'RedShip' });
     this.add.existing(this.enemy);
 
     // TODO: WARNING!!! Adding more asteroids causes game to crash cause is within 'setOnCollide' particle creation
@@ -94,5 +96,22 @@ export class GameScene extends Scene {
     this.cameras.main.centerOn(this.player.x, this.player.y);
     this.enemy.update(this.player);
     this.asteroidService.update();
+
+    if (this.spaceStation.win) {
+      this.scene.start('MissionComplete')
+    }
+    
+    if (this.player.destroyed && !this.faded) {
+      this.faded = true;
+      this.cameras.main.fadeOut(1000);
+      this.cameras.main.once('camerafadeoutcomplete', () => {
+        this.scene.restart();
+      })
+      
+    }
+    
+    if (this.enemy.isDestroyed) {
+      this.spaceStation.visible = true;
+    }
   }
 }
