@@ -65,11 +65,26 @@ export class Player extends Sprite {
     switch (actionToTake?.action) {
       case PlayerAction.FIRE_LASER:
         const laser = this.scene.matter.add.sprite(this.x, this.y, 'Laser');
-        laser.setVelocity(10, this.rotation);
+        const velocity = this.determineLaserVelocity();
+        const { x, y } = velocity;
+        laser.setVelocity(x, y);
         break;
       default: 
         break;
     }
+  }
+
+  private determineLaserVelocity(): { x: number, y: number } {
+    let x = 10;
+    let y = Math.abs(this.rotation);
+    if (this.rotation > 3 && this.rotation <= 5) {
+      x = -10;
+    }
+    // if (this.rotation < 0) {
+    //   y = this.rotation * -1;
+    // }
+    console.log(`X: ${x}, Y: ${y}, ROTATION: ${this.rotation}, ANGLE: ${this.angle}`);
+    return { x , y };
   }
   
 }
