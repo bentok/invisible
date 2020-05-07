@@ -2,6 +2,8 @@
 
 This is a game jam submission for Weekly [Game Jam 147](https://itch.io/jam/weekly-game-jam-147)
 
+Completed entry [here](https://bentok.github.io/invisible/)
+
 ## Setup the application
 
 - Install yarn, typescript and webpack if not already installed globally
