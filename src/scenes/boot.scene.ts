@@ -87,5 +87,8 @@ export class BootScene extends Scene {
     this.load.image('Mars', './src/assets/space/planets/Mars.png');
     this.load.image('Moon', './src/assets/space/planets/Moon.png');
     this.load.image('GreenShip', './src/assets/itchio_space_pixels/pixel_ship.png');
+    this.load.image('RedShip', './src/assets/itchio_space_pixels/pixel_ship_red.png');
+    this.load.image('SpaceStation', './src/assets/itchio_space_pixels/pixel_station_blue.png');
+    this.load.image('Laser', './src/assets/itchio_space_pixels/laser.png');
   }
 }
