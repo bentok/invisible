@@ -50,15 +50,9 @@ export class GameScene extends Scene {
     this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
 
-    // fromEvent(document, 'keydown').pipe(
-    //   map((key: any) => this.player.controller.handleKeyPress(key.keyCode))
-    // ).subscribe(newPosition => {
-    //   if (newPosition?.direction === VelocityDirection.X) {
-    //       this.player.setVelocityX(newPosition.velocity);
-    //   } else if (newPosition?.direction === VelocityDirection.Y){
-    //       this.player.setVelocityY(newPosition.velocity);
-    //   }
-    // });
+    fromEvent(document, 'keydown').subscribe((keyPressed: any) => {
+      this.player.handleAction(keyPressed.keyCode);
+    });
     
     generateStars(this, GALAXY.width, GALAXY.height, 800);
   }
