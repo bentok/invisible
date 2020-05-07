@@ -1,6 +1,5 @@
 import * as Phaser from 'phaser';
-import { BootScene, GameScene, MainMenuScene, GalaxyScene } from './scenes';
-import { PaulNinjaScene } from './scenes/paul-ninja.scene';
+import { BootScene, GameScene, MainMenuScene } from './scenes';
 
 const gameConfig: Phaser.Types.Core.GameConfig = {
   title: 'Invisible (Working Title)',
@@ -21,7 +20,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
       // debug: true,
     },
   },
-  scene: [BootScene, MainMenuScene, GameScene, PaulNinjaScene, GalaxyScene],
+  scene: [BootScene, MainMenuScene, GameScene],
 
   parent: 'content',
   backgroundColor: '#000000',

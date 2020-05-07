@@ -21,10 +21,14 @@ export interface Velocity {
     direction: VelocityDirection;
 }
 
+export enum PlayerAction {
+    FIRE_LASER = 'FIRE_LASER'
+}
+
 // Generic key interfaces
 export interface IKeyEvents {
     key: number;
-    updateVelocity: () => Velocity | null;
+    action: PlayerAction;
 }
 
 export interface IControlEventHandler {
@@ -32,7 +36,7 @@ export interface IControlEventHandler {
     keyEvents: IKeyEvents[];
 
     init(): void;
-    handleKeyPress(key: number): Velocity | null;
+    handleKeyPress(key: number): PlayerAction | null;
 }
 
 export interface ISpriteConfig {

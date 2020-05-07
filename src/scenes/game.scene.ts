@@ -60,6 +60,10 @@ export class GameScene extends Scene {
     this.player = new Player(this.matter.world, { x: 20, y: 20, name: 'GreenShip' });
     this.add.existing(this.player);
 
+    fromEvent(document, 'keydown').subscribe((keyPressed: any) => {
+      this.player.handleAction(keyPressed.keyCode);
+    });
+    
     this.enemy = new Enemy(this.matter.world, { x: 600, y: 600, name: 'RedShip' });
     this.add.existing(this.enemy);
 
