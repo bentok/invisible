@@ -38,7 +38,7 @@ export class GameScene extends Scene {
     this.cursorKeys = this.input.keyboard.createCursorKeys();
     
     this.cameras.main.setBounds(0, 0, GALAXY.width, GALAXY.height);
-    this.cameras.main.setZoom(3);
+    this.cameras.main.setZoom(2);
     
     
     this.matter.enableAttractorPlugin();
