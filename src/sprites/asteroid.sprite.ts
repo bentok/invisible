@@ -1,8 +1,10 @@
 import { Sprite } from '../lib/sprite.class';
 import { ISpriteConfig } from '../interfaces/interfaces';
 import { between } from '../lib/Math';
-import { RaceOperator } from 'rxjs/internal/observable/race';
-import { max } from 'rxjs/operators';
+
+export interface SoundEffects {
+  explosion: () => void;
+}
 
 const asteroidConfig = {
   rotationSpeed: .05,
@@ -19,15 +21,20 @@ export class Asteroid extends Sprite {
   private rotationSpeed: number;
   private dustEmitter: any;
   private isDestroyed = false;
-  private isOffScreen = false;
+  private soundEffects: SoundEffects;
+  private worldView: Phaser.Geom.Rectangle;
 
-  constructor(world: Phaser.Physics.Matter.World, spriteConfig: ISpriteConfig, {
-    rotationSpeed,
-    scale,
-    frictionAir,
-    mass,
-    depth,
-  } = asteroidConfig) {
+  constructor(
+    world: Phaser.Physics.Matter.World,
+    spriteConfig: ISpriteConfig,
+    worldView: Phaser.Geom.Rectangle,
+    soundEffects: SoundEffects,
+    { rotationSpeed,
+      scale,
+      frictionAir,
+      mass,
+      depth,
+    } = asteroidConfig) {
     super(world, spriteConfig.x, spriteConfig.y, spriteConfig.name);
     this.setScale(scale, scale);
     this.setFrictionAir(frictionAir);
@@ -38,6 +45,8 @@ export class Asteroid extends Sprite {
     this.velocityX = between(-5, 5);
     this.velocityY = between(-5, 5);
     this.dustEmitter = this.scene.add.particles('fake');
+    this.worldView = worldView;
+    this.soundEffects = soundEffects;
 
     this.setVelocity(this.velocityX, this.velocityY);
 
@@ -55,8 +64,16 @@ export class Asteroid extends Sprite {
       });
       explosion.explode(20, this.x, this.y);
       this.isDestroyed = true;
+
+      if (this.isOnScreen()) {
+        this.soundEffects.explosion();
+      }
       this.destroy(true);
     });
+  }
+
+  private isOnScreen(): boolean {
+    return this.worldView.contains(this.x, this.y);
   }
 
   update() {

@@ -92,5 +92,8 @@ export class BootScene extends Scene {
     this.load.image('Laser', './src/assets/itchio_space_pixels/laser.png');
 
     this.load.audio('music', ['./src/assets/sound/Space Riddle.mp3']);
+    this.load.audio('player_laser', ['./src/assets/sound/player_laser.wav']);
+    this.load.audio('player_rockets', ['./src/assets/sound/player_rockets.wav']);
+    this.load.audio('explosion', ['./src/assets/sound/explosion.wav']);
   }
 }
